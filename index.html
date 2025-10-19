@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chúc mừng 20/10 - Gửi cô Nga</title>
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: #000000;
+    overflow: hidden;
+    font-family: "Segoe UI", sans-serif;
+  }
+
+  .fall-area {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+  }
+
+  .text {
+    position: absolute;
+    top: -10%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: #ff6699;
+    -webkit-text-stroke: 0.8px #ffe6ec;
+    font-weight: 700;
+    font-size: clamp(24px, 5vw, 32px);
+    max-width: 90vw;
+    text-shadow: 0 0 12px #ff85b3, 0 0 25px #ff4d94;
+    animation: fall linear forwards;
+  }
+
+  .flower {
+    position: absolute;
+    top: -10%;
+    font-size: clamp(18px, 4vw, 28px);
+    animation: fall linear forwards;
+    animation-duration: var(--dur, 7s);
+  }
+
+  .book {
+    position: absolute;
+    top: -10%;
+    font-size: clamp(20px, 4vw, 28px);
+    color: #ff1493;
+    animation: fall linear forwards;
+    animation-duration: var(--dur, 6s);
+  }
+
+  .flower::before {
+    content: "🌸";
+    display: inline-block;
+    animation: spin 3s linear infinite;
+  }
+
+  .book::before {
+    content: "📚";
+    display: inline-block;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(-10%); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(110vh); opacity: 0.5; }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @media (max-width: 768px) {
+    .text, .book {
+      font-size: clamp(20px, 6vw, 28px);
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="fall-area" id="fall"></div>
+
+<script>
+  const MESSAGES = [
+    "20/10 chúc cô Nga luôn mạnh khỏe, hạnh phúc và thật nhiều niềm vui 💖",
+    "Chúc cô Nga lúc nào cũng tươi trẻ, rạng rỡ như ánh nắng mùa xuân 🌷",
+    "Cảm ơn cô Nga đã luôn tận tâm và yêu thương tụi em 💐",
+    "Chúc cô Nga luôn giữ nụ cười dịu dàng và trái tim ấm áp 🌸",
+    "20/10 – Kính chúc cô Nga xinh đẹp, bình an và tràn đầy năng lượng ❤️",
+    "Chúc cô Nga mãi là bông hoa rực rỡ nhất trong vườn tri thức 🌹",
+    "20/10 chúc cô luôn gặp nhiều niềm vui, hạnh phúc bên học trò thân yêu 💞",
+    "Chúc cô Nga luôn tự tin, thành công và ngập tràn yêu thương 💫"
+  ];
+
+  const INTERVAL_MESSAGE = 1000;
+  const INTERVAL_BOOK = 600;
+  const INTERVAL_FLOWER = 900;
+  const SPEED_MIN = 5;
+  const SPEED_MAX = 9;
+  const fall = document.getElementById("fall");
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function spawnMessage() {
+    const el = document.createElement("div");
+    el.className = "text";
+    el.innerText = pick(MESSAGES);
+    el.style.animationDuration = rand(SPEED_MIN, SPEED_MAX) + "s";
+    el.style.left = 30 + Math.random() * -35 + "vw";
+    fall.appendChild(el);
+    el.addEventListener("animationend", () => el.remove());
+  }
+
+  function spawnBook() {
+    const el = document.createElement("div");
+    el.className = "book";
+    el.style.setProperty("--dur", rand(SPEED_MIN + 1, SPEED_MAX + 1) + "s");
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDelay = rand(0, 2) + "s";
+    fall.appendChild(el);
+    el.addEventListener("animationend", () => el.remove());
+  }
+
+  function spawnFlower() {
+    const el = document.createElement("div");
+    el.className = "flower";
+    el.style.setProperty("--dur", rand(SPEED_MIN + 2, SPEED_MAX + 2) + "s");
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDelay = rand(0, 2) + "s";
+    fall.appendChild(el);
+    el.addEventListener("animationend", () => el.remove());
+  }
+
+  setInterval(spawnMessage, INTERVAL_MESSAGE);
+  setInterval(spawnBook, INTERVAL_BOOK);
+  setInterval(spawnFlower, INTERVAL_FLOWER);
+</script>
+</body>
+</html>
